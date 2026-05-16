@@ -1,4 +1,15 @@
-﻿https://www.youtube.com/playlist?list=PLeqyOOqxeiIMN_CCk3JOg_yeo_-xirFti
+﻿https://github.com/okovtun/SPU_411_NP
+https://www.youtube.com/playlist?list=PLeqyOOqxeiIMN_CCk3JOg_yeo_-xirFti
+
+MAC:https://macvendors.com/
+NetTools:https://wiki.linuxfoundation.org/networking/iproute2
+https://photon.codes/blog/we-found-a-ticking-time-bomb-in-macos-tcp-networking
+
+TODO:
+0. Возводить 2 в степень от 0-й до 21-й каждый день утром, и перед сном,
+   желательно и в обденный перерыв;
+1. Написать WPF-приложение, которое максимально понятно и максимально 
+   красиво отображает классы IP-адресов;
 
 TOREAD:
 1. QUIC Protocol;
