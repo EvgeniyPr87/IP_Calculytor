@@ -5,7 +5,12 @@ MAC:https://macvendors.com/
 NetTools:https://wiki.linuxfoundation.org/networking/iproute2
 https://photon.codes/blog/we-found-a-ticking-time-bomb-in-macos-tcp-networking
 
+Private IPs:https://datatracker.ietf.org/doc/html/rfc1918
+
 TODO:
+1. Узнать IP-адрес на телефоне;
+
+DONE:
 0. Возводить 2 в степень от 0-й до 21-й каждый день утром, и перед сном,
    желательно и в обденный перерыв;
 1. Написать WPF-приложение, которое максимально понятно и максимально 
