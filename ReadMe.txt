@@ -7,8 +7,14 @@ https://photon.codes/blog/we-found-a-ticking-time-bomb-in-macos-tcp-networking
 
 Private IPs:https://datatracker.ietf.org/doc/html/rfc1918
 
+SpinControl (Up/Down Control):
+https://learn.microsoft.com/en-us/windows/win32/controls/up-down-controls
+
+
 TODO:
 1. Узнать IP-адрес на телефоне;
+2. Изменения маски должны отображаться на префиксе;
+3. Изменения префикса должны отображаться на максе;
 
 DONE:
 0. Возводить 2 в степень от 0-й до 21-й каждый день утром, и перед сном,

@@ -1,6 +1,17 @@
 //IPcalculator
 #include<Windows.h>
+#include<CommCtrl.h>
 #include"resource.h"
+
+/*
+----------------------
+Prefix:
+255.0.0.0 /8
+255.255.0.0 /16
+255.255.255.0 /24
+255.255.255.128	/25
+----------------------
+*/
 
 BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -15,9 +26,44 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 	case WM_INITDIALOG:
+		SendMessage(GetDlgItem(hwnd, IDC_SPIN_PREFIX), UDM_SETRANGE, 0, MAKEWORD(32, 0));
 		break;
 	case WM_COMMAND:
-		break;
+	{
+		HWND hIPaddress = GetDlgItem(hwnd, IDC_IPADDRESS);
+		HWND hIPmask = GetDlgItem(hwnd, IDC_IPMASK);
+		HWND hEditPrefix = GetDlgItem(hwnd, IDC_EDIT_PREFIX);
+		DWORD dwIPaddress = 0;
+		DWORD dwIPmask = 0;
+		DWORD dwPrefix = 0;
+		//https://learn.microsoft.com/en-us/windows/win32/controls/bumper-ip-address-control-reference-messages
+		switch (LOWORD(wParam))
+		{
+		case IDC_IPADDRESS:
+			if (HIWORD(wParam) == EN_CHANGE)
+			{
+				SendMessage(hIPaddress, IPM_GETADDRESS, 0, (LPARAM)&dwIPaddress);
+				DWORD dwFirst = FIRST_IPADDRESS(dwIPaddress);
+				LPARAM lpMask = 0;
+				if (dwFirst < 128)lpMask = MAKEIPADDRESS(255, 0, 0, 0);
+				else if (dwFirst < 192)lpMask = MAKEIPADDRESS(255, 255, 0, 0);
+				else if (dwFirst < 224)lpMask = MAKEIPADDRESS(255, 255, 255, 0);
+				SendMessage(hIPmask, IPM_SETADDRESS, 0, lpMask);
+			}
+			break;
+		case IDC_IPMASK:
+			if (HIWORD(wParam) == EN_CHANGE)
+			{
+				SendMessage(hIPmask, IPM_GETADDRESS, 0, (LPARAM)&dwIPmask);
+				//TODO: Set prefix, depend on Mask;
+			}
+			break;
+		case IDOK:
+			break;
+		case IDCANCEL:EndDialog(hwnd, 0);
+		}
+	}
+	break;
 	case WM_CLOSE:EndDialog(hwnd, 0);
 	}
 	return FALSE;
