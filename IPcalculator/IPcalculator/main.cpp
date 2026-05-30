@@ -39,6 +39,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		DWORD dwIPaddress = 0;
 		DWORD dwIPmask = 0;
 		DWORD dwPrefix = 0;
+		CHAR szPrefix[3] = {};
 		//https://learn.microsoft.com/en-us/windows/win32/controls/bumper-ip-address-control-reference-messages
 		switch (LOWORD(wParam))
 		{
@@ -61,17 +62,52 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				//TODO: Set prefix, depend on Mask;
 				//dwPrefix = UINT_MAX;
 				for (dwPrefix = 0; dwIPmask; dwPrefix++) dwIPmask <<= 1;
-				CHAR szPrefix[3] = {};
+				
 				sprintf(szPrefix, "%i", dwPrefix);
 				SendMessage(hEditPrefix, WM_SETTEXT, 0, (LPARAM)szPrefix);
 			}
 			break;
+		case IDC_EDIT_PREFIX:
+			if(HIWORD(wParam) == EN_CHANGE);
+			{
+				/*SendMessage(hEditPrefix, WM_GETTEXT, 3, (LPARAM)&szPrefix);
+				dwPrefix = atoi(szPrefix);
+				dwIPmask = UINT_MAX;
+				for (int i = 0; i < 32 - dwPrefix; i++)dwIPmask <<= 1;
+				SendMessage(hIPmask, IPM_SETADDRESS, 0, 0);*/
+			}
+
+			break;
+
+		case IDC_BUTTON_RESET:
+			SendMessage(hIPaddress,IPM_CLEARADDRESS, 0, 0);
+			SendMessage(hIPmask,IPM_CLEARADDRESS, 0, 0);
+			break;
+
 		case IDOK:
 			break;
+
 		case IDCANCEL:EndDialog(hwnd, 0);
 		}
 	}
 	break;
+
+	case WM_NOTIFY:
+	{
+		HWND hIPmask = GetDlgItem(hwnd, IDC_IPMASK);
+		HWND hEditPrefix = GetDlgItem(hwnd, IDC_EDIT_PREFIX);
+		DWORD dwIPmask = 0;
+		DWORD dwPrefix = 0;
+		CHAR szPrefix[3] = {};
+
+		SendMessage(hEditPrefix, WM_GETTEXT, 3, (LPARAM)&szPrefix);
+		dwPrefix = atoi(szPrefix);
+		dwIPmask = UINT_MAX;
+		for (int i = 0; i < 32 - dwPrefix; i++)dwIPmask <<= 1;
+		SendMessage(hEditPrefix, WM_SETTEXT, 0, (LPARAM)szPrefix);
+	}
+	break;
+
 	case WM_CLOSE:EndDialog(hwnd, 0);
 	}
 	return FALSE;
